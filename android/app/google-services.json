@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "900440514087",
+    "project_id": "flutter-muaz",
+    "storage_bucket": "flutter-muaz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900440514087:android:cd6d990be76a16eb5f3802",
+        "android_client_info": {
+          "package_name": "com.teamone.share_near"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "900440514087-fnecnhp1nvd6ej63vup7os9pj2r9cqni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQuAmHBTSQd9QNE8LeJh5imSzksf5XBs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "900440514087-fnecnhp1nvd6ej63vup7os9pj2r9cqni.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "900440514087-860cts6blkg8tqnvr4n8cgb81pns6ucl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shareNearV2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
