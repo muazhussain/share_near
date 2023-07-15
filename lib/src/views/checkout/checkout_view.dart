@@ -19,10 +19,11 @@ class CheckoutView extends StatefulWidget {
 class _CheckoutViewState extends State<CheckoutView> {
   Future<void> sendNotifications() async {
     final User? user = Auth().currentUser;
+    final time = DateTime.now();
     final notification = Notifications(
       user: user?.email ?? '',
       productName: curProduct.title,
-      date: DateTime.now(),
+      date: '${time.day} ${time.month} ${time.year}',
       receiver: curProduct.owner,
     );
     await Data().uploadNotification(notification);

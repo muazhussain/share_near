@@ -20,7 +20,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   bool _inProcess = false;
-  List<Product> allProduct = [];
+  List<Product> products = [];
   List<Product> reverseAllProduct = [];
 
   Future<List<Product>> getAllProducts() async {
@@ -29,7 +29,6 @@ class _HomeViewState extends State<HomeView> {
 
     final List<Product> products = snapshot.docs.map((doc) {
       final data = doc.data();
-
       return Product(
         title: data['title'],
         description: data['description'],
@@ -44,13 +43,16 @@ class _HomeViewState extends State<HomeView> {
         currentRenter: data['currentRenter'],
       );
     }).toList();
+
     return products;
   }
 
   Future<void> fetchProducts() async {
+    setState(() {});
     final data = await getAllProducts();
+    print('length: $data.length');
     setState(() {
-      allProduct = data;
+      products = data;
       reverseAllProduct = data.reversed.toList();
     });
   }
@@ -123,7 +125,7 @@ class _HomeViewState extends State<HomeView> {
                         SectionTitle(
                           text: 'Popular Products',
                           press: () {
-                            allProductPage = allProduct;
+                            allProductPage = products;
                             Get.to(
                               () => const AllProductsView(),
                               duration: const Duration(milliseconds: 700),
@@ -134,27 +136,30 @@ class _HomeViewState extends State<HomeView> {
                         littleGap,
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              ...List.generate(
-                                2,
-                                (index) => ProductCard(
-                                  product: allProduct[index],
-                                  onTap: () {
-                                    curProduct = allProduct[index];
-                                    Get.to(
-                                      () => ProductDetailsView(
-                                        product: curProduct,
+                          child: products.isEmpty
+                              ? const SizedBox(
+                                  height: 0,
+                                )
+                              : Row(
+                                  children: [
+                                    ...List.generate(
+                                      2,
+                                      (index) => ProductCard(
+                                        product: reverseAllProduct[index],
+                                        onTap: () {
+                                          curProduct = reverseAllProduct[index];
+                                          Get.to(
+                                            () => ProductDetailsView(
+                                                product: curProduct),
+                                            duration: const Duration(
+                                                milliseconds: 700),
+                                            transition: Transition.zoom,
+                                          );
+                                        },
                                       ),
-                                      duration:
-                                          const Duration(milliseconds: 700),
-                                      transition: Transition.zoom,
-                                    );
-                                  },
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
                         ),
                         littleGap,
                         SectionTitle(
@@ -171,26 +176,30 @@ class _HomeViewState extends State<HomeView> {
                         littleGap,
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              ...List.generate(
-                                2,
-                                (index) => ProductCard(
-                                  product: reverseAllProduct[index],
-                                  onTap: () {
-                                    curProduct = reverseAllProduct[index];
-                                    Get.to(
-                                      () => ProductDetailsView(
-                                          product: curProduct),
-                                      duration:
-                                          const Duration(milliseconds: 700),
-                                      transition: Transition.zoom,
-                                    );
-                                  },
+                          child: products.isEmpty
+                              ? const SizedBox(
+                                  height: 0,
+                                )
+                              : Row(
+                                  children: [
+                                    ...List.generate(
+                                      2,
+                                      (index) => ProductCard(
+                                        product: reverseAllProduct[index],
+                                        onTap: () {
+                                          curProduct = reverseAllProduct[index];
+                                          Get.to(
+                                            () => ProductDetailsView(
+                                                product: curProduct),
+                                            duration: const Duration(
+                                                milliseconds: 700),
+                                            transition: Transition.zoom,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
                         ),
                       ],
                     ),

@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:share_near/src/models/user_model.dart';
+import 'package:share_near/src/services/auth.dart';
 import 'package:share_near/src/services/data.dart';
-import 'package:share_near/src/utils/auth_utils.dart';
 import 'package:share_near/src/utils/constants.dart';
 import 'package:share_near/src/utils/size_config.dart';
 import 'package:share_near/src/views/bottom-nav-bar/bottom_nav_bar_view.dart';
@@ -27,8 +28,6 @@ class _UserDetailsViewState extends State<UserDetailsView> {
   late final TextEditingController _nidNumberController;
   late final TextEditingController _districtNameController;
   late final GlobalKey<FormState> _formKey;
-
-  
 
   @override
   void initState() {
@@ -60,6 +59,9 @@ class _UserDetailsViewState extends State<UserDetailsView> {
   Future<void> userInfoUpload() async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages = referenceRoot.child('profileImage');
+    final User? nuser = Auth().currentUser;
+    String email = nuser!.email ?? '';
+    appUserEmail = email;
     List<String> parts = appUserEmail!.split('@');
     String imageName = parts[0];
     Reference referenceImageToUpload = referenceDirImages.child(imageName);
@@ -291,9 +293,6 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                             }
                           }
                           locationData = await location.getLocation();
-                          await AuthUtils().saveLocation(
-                              locationData.latitude ?? 0,
-                              locationData.longitude ?? 0);
                           log(locationData.latitude.toString());
                           log(locationData.longitude.toString());
                         },
@@ -318,8 +317,8 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                             setState(() {
                               _isProcessing = true;
                             });
-                            appLatitude = locationData.latitude ?? 0;
-                            appLongitude = locationData.longitude ?? 0;
+                            appLatitude = locationData.latitude;
+                            appLongitude = locationData.longitude;
                             await userInfoUpload();
                             setState(() {
                               _isProcessing = false;

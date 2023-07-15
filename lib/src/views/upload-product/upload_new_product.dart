@@ -116,6 +116,7 @@ class _UploadNewProductState extends State<UploadNewProduct> {
       longitude: appLongitude ?? 0,
       rentDuration: int.parse(_rentDurationController.text.trim()),
       images: imageURL,
+      currentRenter: '',
     );
 
     await Data().uploadNewProduct(product).whenComplete(() {

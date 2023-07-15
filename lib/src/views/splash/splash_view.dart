@@ -81,7 +81,9 @@ class _SplashViewState extends State<SplashView> {
                         },
                       ),
                     )
-                  : const SizedBox(),
+                  : const SizedBox(
+                      height: 0,
+                    ),
             ],
           ),
         ),

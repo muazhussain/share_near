@@ -1,88 +1,82 @@
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:share_near/src/models/product_model.dart';
-import 'package:share_near/src/views/demo-view/card_product.dart';
+// import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:share_near/src/models/product_model.dart';
 
-class TestProductView extends StatefulWidget {
-  const TestProductView({super.key});
+// class TestProductView extends StatefulWidget {
+//   const TestProductView({super.key});
 
-  @override
-  _TestProductViewState createState() => _TestProductViewState();
-}
+//   @override
+//   _TestProductViewState createState() => _TestProductViewState();
+// }
 
-class _TestProductViewState extends State<TestProductView> {
-  late Stream<QuerySnapshot<Map<String, dynamic>>> _productStream;
+// class _TestProductViewState extends State<TestProductView> {
+//   late Stream<QuerySnapshot<Map<String, dynamic>>> _productStream;
 
-  @override
-  void initState() {
-    super.initState();
-    _productStream =
-        FirebaseFirestore.instance.collection('Products').snapshots();
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     getAllProducts();
+//   }
 
-  final int itemsPerRow = 3;
-  final int widgetCount = 9;
+//   final int itemsPerRow = 3;
+//   final int widgetCount = 9;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Product List'),
-      ),
-      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: _productStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
+//   Future<List<Product>> getAllProducts() async {
+//     final QuerySnapshot<Map<String, dynamic>> snapshot =
+//         await FirebaseFirestore.instance.collection('Products').get();
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+//     final List<Product> products = snapshot.docs.map((doc) {
+//       final data = doc.data();
+//       return Product(
+//         title: data['title'],
+//         description: data['description'],
+//         rentCost: data['rentCost'],
+//         productPrice: data['productPrice'],
+//         rating: data['rating'],
+//         owner: data['owner'],
+//         latitude: data['latitude'],
+//         longitude: data['longitude'],
+//         rentDuration: data['rentDuration'],
+//         images: List<String>.from(data['images']),
+//         currentRenter: data['currentRenter'],
+//       );
+//     }).toList();
 
-          final products = snapshot.data!.docs;
+//     return products;
+//   }
 
-          return ListView.builder(
-            itemCount: (widgetCount / itemsPerRow).ceil(),
-            itemBuilder: (context, index) {
-              final startIndex = index * itemsPerRow;
-              final endIndex = (startIndex + itemsPerRow) < widgetCount
-                  ? (startIndex + itemsPerRow)
-                  : widgetCount;
-              return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: <Widget>[
-                    ...List.generate(
-                      endIndex - startIndex,
-                      (subIndex) {
-                        final data = products[0].data();
-                        final product = Product(
-                          title: data['title'],
-                          description: data['description'],
-                          rentCost: data['rentCost'],
-                          productPrice: data['productPrice'],
-                          rating: data['rating'],
-                          owner: data['owner'],
-                          latitude: data['latitude'],
-                          longitude: data['longitude'],
-                          rentDuration: data['rentDuration'],
-                          images: List<String>.from(data['images']),
-                          currentRenter: data['currentRenter'],
-                        );
+//   List<Product> products = [];
 
-                        return DemoCard(product: product);
-                      },
-                    )
-                  ],
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
+//   Future<void> fetchProducts() async {
+//     final data = await getAllProducts();
+//     print('length: $products.length');
+//     setState(() {
+//       products = data;
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Product List'),
+//       ),
+//       body: ListView.builder(
+//         itemCount: products.length,
+//         itemBuilder: (BuildContext context, int index) {
+//           final product = products[index];
+//           return ListTile(
+//             title: Text(product.title),
+//             subtitle: Text(product.description),
+//             trailing: Text('Price: \$${product.productPrice}'),
+//             onTap: () {
+//               // Handle product selection
+//               // For example, navigate to a product detail screen
+//               // using Navigator.push()
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

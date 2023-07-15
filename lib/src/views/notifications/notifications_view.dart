@@ -16,7 +16,7 @@ class _NotificationsViewState extends State<NotificationsView> {
   void initState() {
     super.initState();
     _notificationsStream =
-        FirebaseFirestore.instance.collection('Products').snapshots();
+        FirebaseFirestore.instance.collection('Notifications').snapshots();
   }
 
   @override
@@ -49,7 +49,7 @@ class _NotificationsViewState extends State<NotificationsView> {
             itemBuilder: (context, index) {
               final data = notifications[index].data();
               final notification = Notifications(
-                user: data['user'],
+                user: data ['user'],
                 productName: data['productName'],
                 date: data['date'],
                 receiver: data['receiver'],

@@ -29,9 +29,7 @@ class ShareNearApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: appTheme(),
       home: user != null ? const BottomNavBarView() : const SplashView(),
-      // home: ProductDetailsView(
-      //   product: demoProducts[0],
-      // ),
+      // home: const TestProductView(),
     );
   }
 }

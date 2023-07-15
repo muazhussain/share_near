@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:share_near/src/models/user_model.dart';
+import 'package:share_near/src/services/auth.dart';
 import 'package:share_near/src/utils/constants.dart';
 import 'package:share_near/src/views/categories/categories_view.dart';
 import 'package:share_near/src/views/home-view/home_view.dart';
@@ -13,7 +17,47 @@ class BottomNavBarView extends StatefulWidget {
 }
 
 class _BottomNavBarViewState extends State<BottomNavBarView> {
-  int _currentTab = 0;
+  Future<UserModel?> getUserByEmail(String email) async {
+    final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+        .instance
+        .collection('Users')
+        .where('email', isEqualTo: email)
+        .get();
+
+    if (snapshot.docs.isNotEmpty) {
+      final data = snapshot.docs.first.data();
+      return UserModel(
+        email: data['email'],
+        fullName: data['fullName'],
+        phoneNumber: data['phoneNumber'],
+        nidNumber: data['nidNumber'],
+        districtName: data['districtName'],
+        membership: data['membership'],
+        latitude: data['latitude'],
+        longitude: data['longitude'],
+        profileImage: data['profileImage'],
+      );
+    }
+    return null;
+  }
+
+  Future<void> setLocationAndEmail() async {
+    final User? user = Auth().currentUser;
+    String email = user!.email ?? '';
+    appUserEmail = email;
+    UserModel? curUser = await getUserByEmail(email);
+    appLatitude = curUser!.latitude;
+    appLongitude = curUser.longitude;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    setLocationAndEmail();
+    super.initState();
+  }
+
+  int _currentTab = 3;
   final List<Widget> _screens = const [
     HomeView(),
     CategoriesView(),

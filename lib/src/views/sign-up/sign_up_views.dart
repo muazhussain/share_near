@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_near/src/services/auth.dart';
-import 'package:share_near/src/utils/auth_utils.dart';
 import 'package:share_near/src/utils/constants.dart';
 import 'package:share_near/src/utils/size_config.dart';
 import 'package:share_near/src/views/global-components/app_text_form_field.dart';
@@ -54,10 +53,6 @@ class _SignUpViewsState extends State<SignUpViews> {
         _errorMessage = err.message;
       });
     }
-    AuthUtils().saveUserData(
-      _emailController.text.trim(),
-      _passwordController.text,
-    );
   }
 
   @override
@@ -164,7 +159,6 @@ class _SignUpViewsState extends State<SignUpViews> {
                               ),
                         press: () async {
                           if ((_formKey.currentState!.validate())) {
-                            appUserEmail = _emailController.text;
                             setState(() {
                               _isProcessing = true;
                             });

@@ -11,10 +11,11 @@ SizedBox littleGap = SizedBox(height: SizeConfig.screenHeight * 0.02);
 SizedBox smallerGap = SizedBox(height: SizeConfig.screenHeight * 0.04);
 SizedBox biggerGap = SizedBox(height: SizeConfig.screenHeight * 0.08);
 
-String? appUserEmail;
 double? appLatitude;
 double? appLongitude;
 Product curProduct = demoProducts[0];
+
+String? appUserEmail;
 
 List<Product> allProductPage = [];
 

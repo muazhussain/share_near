@@ -1,7 +1,7 @@
 class Notifications {
   String user;
   String productName;
-  DateTime date;
+  String date;
   String receiver;
 
   Notifications({

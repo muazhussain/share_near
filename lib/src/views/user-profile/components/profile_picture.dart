@@ -43,7 +43,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
   UserModel? user;
   Future<void> fetchUser() async {
     final User? nuser = Auth().currentUser;
-    String email = nuser!.email ?? ''; // Specify the email to fetch the user
+    String email = nuser!.email ?? '';
     user = await getUserByEmail(email);
     setState(() {});
   }

@@ -44,7 +44,9 @@ class _AllProductsViewState extends State<AllProductsView> {
                     onTap: () {
                       curProduct = allProductPage[index];
                       Get.to(
-                        () =>  ProductDetailsView(product: curProduct!,),
+                        () => ProductDetailsView(
+                          product: curProduct,
+                        ),
                         duration: const Duration(milliseconds: 700),
                         transition: Transition.zoom,
                       );
