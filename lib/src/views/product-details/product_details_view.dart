@@ -22,8 +22,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
 
   Future<void> getDistance() async {
     distance = calculateDistance(
-      appLatitude ?? widget.product.latitude - 0.1,
-      appLongitude ?? widget.product.longitude - 0.1,
+      appLatitude!,
+      appLongitude!,
       widget.product.latitude,
       widget.product.longitude,
     );

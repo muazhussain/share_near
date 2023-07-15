@@ -79,13 +79,13 @@ class _MyProductsViewState extends State<MyProductsView> {
             children: [
               smallerGap,
               ...List.generate(
-                3,
+                products.length,
                 (index) => ProductCard(
                   product: products[index],
                   onTap: () {
                     curProduct = products[index];
                     Get.to(
-                      () => ProductDetailsView(product: curProduct),
+                      () => ProductDetailsView(product: curProduct!),
                       duration: const Duration(milliseconds: 700),
                       transition: Transition.zoom,
                     );

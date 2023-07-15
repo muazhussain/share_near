@@ -13,7 +13,7 @@ SizedBox biggerGap = SizedBox(height: SizeConfig.screenHeight * 0.08);
 
 double? appLatitude;
 double? appLongitude;
-Product curProduct = demoProducts[0];
+Product? curProduct;
 
 String? appUserEmail;
 

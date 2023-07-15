@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -124,42 +126,6 @@ class _HomeViewState extends State<HomeView> {
                         SectionTitle(
                           text: 'Popular Products',
                           press: () {
-                            allProductPage = products;
-                            Get.to(
-                              () => const AllProductsView(),
-                              duration: const Duration(milliseconds: 700),
-                              transition: Transition.zoom,
-                            );
-                          },
-                        ),
-                        littleGap,
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              ...List.generate(
-                                3,
-                                (index) => ProductCard(
-                                  product: reverseAllProduct[index],
-                                  onTap: () {
-                                    curProduct = reverseAllProduct[index];
-                                    Get.to(
-                                      () => ProductDetailsView(
-                                          product: curProduct),
-                                      duration:
-                                          const Duration(milliseconds: 700),
-                                      transition: Transition.zoom,
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        littleGap,
-                        SectionTitle(
-                          text: 'New Arrival',
-                          press: () {
                             allProductPage = reverseAllProduct;
                             Get.to(
                               () => const AllProductsView(),
@@ -174,14 +140,52 @@ class _HomeViewState extends State<HomeView> {
                           child: Row(
                             children: [
                               ...List.generate(
-                                3,
+                                min(5, reverseAllProduct.length),
                                 (index) => ProductCard(
                                   product: reverseAllProduct[index],
                                   onTap: () {
                                     curProduct = reverseAllProduct[index];
+                                    print(index);
                                     Get.to(
                                       () => ProductDetailsView(
-                                          product: curProduct),
+                                        product: reverseAllProduct[index],
+                                      ),
+                                      duration:
+                                          const Duration(milliseconds: 700),
+                                      transition: Transition.zoom,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        littleGap,
+                        SectionTitle(
+                          text: 'New Arrival',
+                          press: () {
+                            allProductPage = products;
+                            Get.to(
+                              () => const AllProductsView(),
+                              duration: const Duration(milliseconds: 700),
+                              transition: Transition.zoom,
+                            );
+                          },
+                        ),
+                        littleGap,
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              ...List.generate(
+                                min(5, products.length),
+                                (index) => ProductCard(
+                                  product: products[index],
+                                  onTap: () {
+                                    curProduct = products[index];
+                                    Get.to(
+                                      () => ProductDetailsView(
+                                          product: curProduct!),
                                       duration:
                                           const Duration(milliseconds: 700),
                                       transition: Transition.zoom,

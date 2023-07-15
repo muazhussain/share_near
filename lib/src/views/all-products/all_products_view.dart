@@ -45,7 +45,7 @@ class _AllProductsViewState extends State<AllProductsView> {
                       curProduct = allProductPage[index];
                       Get.to(
                         () => ProductDetailsView(
-                          product: curProduct,
+                          product: curProduct!,
                         ),
                         duration: const Duration(milliseconds: 700),
                         transition: Transition.zoom,

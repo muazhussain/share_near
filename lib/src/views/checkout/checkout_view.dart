@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,14 +18,32 @@ class CheckoutView extends StatefulWidget {
 }
 
 class _CheckoutViewState extends State<CheckoutView> {
+  Future<void> updateProductCurrentRenter(
+      String title, String currentRenter) async {
+    final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+        .instance
+        .collection('Products')
+        .where('title', isEqualTo: title)
+        .get();
+
+    if (snapshot.docs.isNotEmpty) {
+      final docId = snapshot.docs.first.id;
+      await FirebaseFirestore.instance
+          .collection('Products')
+          .doc(docId)
+          .update({'currentRenter': currentRenter});
+    }
+  }
+
   Future<void> sendNotifications() async {
     final User? user = Auth().currentUser;
+    await updateProductCurrentRenter(curProduct!.title, user!.email ?? '');
     final time = DateTime.now();
     final notification = Notifications(
-      user: user?.email ?? '',
-      productName: curProduct.title,
+      user: user.email ?? '',
+      productName: curProduct!.title,
       date: '${time.day}-${time.month}-${time.year}',
-      receiver: curProduct.owner,
+      receiver: curProduct!.owner,
     );
     await Data().uploadNotification(notification);
   }
@@ -67,7 +86,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                         color: const Color(0xFFF5F6F9),
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: Image.network(curProduct.images![0]),
+                      child: Image.network(curProduct!.images![0]),
                     ),
                   ),
                 ),
@@ -77,7 +96,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                 Column(
                   children: <Widget>[
                     Text(
-                      curProduct.title,
+                      curProduct!.title,
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black,
@@ -86,7 +105,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     ),
                     Text.rich(
                       TextSpan(
-                        text: '\n${curProduct.rentCost}',
+                        text: '\n${curProduct!.rentCost}',
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           color: primaryColor,
@@ -103,7 +122,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Rent Cost: ${curProduct.rentCost}',
+                  'Rent Cost: ${curProduct!.rentCost}',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -111,7 +130,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                 ),
                 smallerGap,
                 Text(
-                  'Insurance Fee: ${curProduct.productPrice * 0.1}',
+                  'Insurance Fee: ${curProduct!.productPrice * 0.1}',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -119,7 +138,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                 ),
                 smallerGap,
                 Text(
-                  'Total: ${curProduct.productPrice * 0.1 + curProduct.rentCost}',
+                  'Total: ${curProduct!.productPrice * 0.1 + curProduct!.rentCost}',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
