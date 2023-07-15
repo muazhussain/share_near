@@ -23,7 +23,7 @@ class _CheckoutViewState extends State<CheckoutView> {
     final notification = Notifications(
       user: user?.email ?? '',
       productName: curProduct.title,
-      date: '${time.day} ${time.month} ${time.year}',
+      date: '${time.day}-${time.month}-${time.year}',
       receiver: curProduct.owner,
     );
     await Data().uploadNotification(notification);

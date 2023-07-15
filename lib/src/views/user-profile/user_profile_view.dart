@@ -12,6 +12,7 @@ import 'package:share_near/src/views/rented-products/rented_products_view.dart';
 import 'package:share_near/src/views/upload-product/upload_new_product.dart';
 import 'package:share_near/src/views/user-profile/components/profile_picture.dart';
 import 'package:share_near/src/views/user-profile/components/user_profile_menu.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserProfileView extends StatefulWidget {
   const UserProfileView({super.key});
@@ -82,7 +83,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                   smallerGap,
                   UserProfileMenu(
                     leadingIcon: 'assets/icons/product.svg',
-                    text: 'Borrowed Products',
+                    text: 'My Products',
                     press: () {
                       Get.to(
                         () => const MyProductsView(),
@@ -101,6 +102,15 @@ class _UserProfileViewState extends State<UserProfileView> {
                         duration: const Duration(milliseconds: 700),
                         transition: Transition.rightToLeft,
                       );
+                    },
+                  ),
+                  smallerGap,
+                  UserProfileMenu(
+                    leadingIcon: 'assets/icons/nid.svg',
+                    text: 'Terms & Conditions',
+                    press: () async {
+                      final url = Uri.parse('');
+                      launchUrl(url, mode: LaunchMode.inAppWebView);
                     },
                   ),
                   biggerGap,
