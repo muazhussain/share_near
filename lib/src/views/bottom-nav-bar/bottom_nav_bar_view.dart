@@ -57,7 +57,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
     super.initState();
   }
 
-  int _currentTab = 3;
+  int _currentTab = 0;
   final List<Widget> _screens = const [
     HomeView(),
     CategoriesView(),

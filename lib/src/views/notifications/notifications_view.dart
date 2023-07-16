@@ -70,10 +70,10 @@ class _NotificationsViewState extends State<NotificationsView> {
               smallerGap,
               ...List.generate(
                 notifications.length,
-                (index) => ListTile(
-                  title: Text(
-                      '${notifications[index].user} rented ${notifications[index].productName}'),
-                  subtitle: Text(notifications[index].date),
+                (index) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                      '${notifications[index].user}\nrented ${notifications[index].productName}'),
                 ),
               ),
             ],

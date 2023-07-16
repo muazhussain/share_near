@@ -156,11 +156,11 @@ class _CheckoutViewState extends State<CheckoutView> {
                           duration: Duration(seconds: 1),
                         ),
                       );
-                    }).whenComplete(() {
+                    }).onError((error, stackTrace) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Something went wrong'),
-                          duration: Duration(seconds: 1),
+                        SnackBar(
+                          content: Text(error.toString()),
+                          duration: const Duration(seconds: 1),
                         ),
                       );
                     });

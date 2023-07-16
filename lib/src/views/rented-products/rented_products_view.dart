@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:share_near/src/models/product_model.dart';
 import 'package:share_near/src/services/auth.dart';
 import 'package:share_near/src/utils/constants.dart';
 import 'package:share_near/src/utils/size_config.dart';
-import 'package:share_near/src/views/home-view/components/product_card.dart';
-import 'package:share_near/src/views/product-details/product_details_view.dart';
 
 class RentedProductView extends StatefulWidget {
   const RentedProductView({super.key});
@@ -49,7 +46,14 @@ class _RentedProductViewState extends State<RentedProductView> {
     final User? nuser = Auth().currentUser;
     String email = nuser!.email ?? '';
     products = await getProductsByEmail(email);
+    print(products.length);
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    fetchProduct();
+    super.initState();
   }
 
   @override
@@ -73,16 +77,13 @@ class _RentedProductViewState extends State<RentedProductView> {
               smallerGap,
               ...List.generate(
                 products.length,
-                (index) => ProductCard(
-                  product: products[index],
-                  onTap: () {
-                    curProduct = products[index];
-                    Get.to(
-                      () => ProductDetailsView(product: curProduct!),
-                      duration: const Duration(milliseconds: 700),
-                      transition: Transition.zoom,
-                    );
-                  },
+                (index) => Text(
+                  products[index].title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    backgroundColor: primaryColor.withOpacity(0.5),
+                  ),
                 ),
               ),
             ],
