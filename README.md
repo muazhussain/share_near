@@ -23,7 +23,6 @@ ShareNear is an application intended for the online sharing of stuff. The main o
 <div align="center">
   <img src="https://github.com/muazhussain/share_near/assets/48112747/809bcc29-e4c7-4599-afd4-e8edb1b05526" width="250px" </img>
   <img src="https://github.com/muazhussain/share_near/assets/48112747/a1f8889b-d2d8-457a-a4d4-53312cd6b7cb" width="250px" </img>
-  <img src="" width="250px" </img>
 </div>
 
 <!-- Add New Product -->
