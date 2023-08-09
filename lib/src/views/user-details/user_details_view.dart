@@ -176,9 +176,9 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                         textInputType: TextInputType.number,
                         maxLength: 11,
                         validator: (value) {
-                          final bool firstNameValid =
+                          final bool numberValid =
                               RegExp(r"^\d{11}$").hasMatch(value ?? '');
-                          if (firstNameValid) {
+                          if (numberValid) {
                             return null;
                           }
                           return 'Enter valid phone number';
